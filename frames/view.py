@@ -27,24 +27,26 @@ class fr_view(tk.Frame):
         self.lb_user.grid(row=1, column=0, sticky="nw", columnspan=2)
 
         self.btn_lend = tk.Button(
-            self, text="Lend Item", font=("Arial", 15), command=lambda: self.lend
+            self, text="Lend Item", font=("Arial", 15), command=lambda: self.lend()
         )
         self.btn_lend.grid(row=1, column=1, sticky="nw")
 
     def lend(self):
+        print("Lend triggered")
         userid = self.cur.execute(f"""
                          
-                         SELECT id FROM Users WHERE username={self.controller.user}
+                         SELECT id FROM Users WHERE username="{self.controller.user}"
                          
                          """)
 
         self.cur.execute(f"""
                          
                          UPDATE Assets
-                         SET Assets.user={userid.fetchone()[0]}
-                         WHERE Assets.id={self.item}
+                         SET user={userid.fetchone()[0]}
+                         WHERE id={self.item}
                          
                          """)
+        print("User changed")
 
     def refresh(self):
         self.item = self.controller.item
@@ -74,4 +76,3 @@ class fr_view(tk.Frame):
 
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
-
