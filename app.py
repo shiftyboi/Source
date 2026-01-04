@@ -21,6 +21,7 @@ class App(tk.Tk):
         self.container.pack(side="top", fill="both", expand=True)
 
         self.cur = None
+        self.conn = None
         self.user = None  # These will be set later by the login process, so other frames can use them
         self.item = None
 

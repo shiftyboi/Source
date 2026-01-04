@@ -46,6 +46,9 @@ class fr_view(tk.Frame):
                          WHERE id={self.item}
                          
                          """)
+
+        self.controller.conn.commit()
+        
         print("User changed")
 
     def refresh(self):

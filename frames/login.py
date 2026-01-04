@@ -69,6 +69,7 @@ class fr_login(tk.Frame):
                 self.controller.user = txt_username
                 self.controller.cur = cur
                 self.controller.show_frame("menu")
+                self.controller.conn = obj_db
             else:
                 messagebox.showerror(
                     "Login failed", "Please check username and password"
