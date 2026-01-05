@@ -16,6 +16,7 @@ class fr_view(tk.Frame):
         self.txt_id = tk.StringVar()
         self.txt_user = tk.StringVar()
         self.txt_name = tk.StringVar()
+        self.txt_ent_name = tk.StringVar()
 
         self.lb_id = tk.Label(
             self, text="ID: null", font=("Arial", 15), textvariable=self.txt_id
@@ -41,6 +42,12 @@ class fr_view(tk.Frame):
             self, text="Delete Item", font=("Arial", 15), command=lambda: self.delete()
         )
         self.btn_delete.grid(row=0, column=1, sticky="nw")
+
+        self.btn_save = tk.Button(self, text="Save name", font=("Arial", 15), command=lambda: self.save())
+        self.btn_save.grid(row=2, column=1, sticky="")
+        
+        self.ent_name = tk.Entry(self, textvariable=self.txt_ent_name, font=("Arial", 15))
+        self.ent_name.grid(row=2, column=0, sticky="e")
 
     def lend(self):
         print("Lend triggered")
@@ -72,6 +79,25 @@ class fr_view(tk.Frame):
                         WHERE id={self.item}
 
         """)
+
+        self.controller.conn.commit()
+    
+    def save(self):
+        self.item = self.controller.item
+        self.cur = self.controller.cur
+
+        name = self.txt_ent_name.get()    
+        
+        
+        self.cur.execute(f'''
+
+                        UPDATE Assets
+                        SET name = "{name}"
+                        WHERE id = {self.item}
+                        
+''')
+        self.controller.conn.commit()
+    
     
     
     
@@ -95,7 +121,8 @@ class fr_view(tk.Frame):
 
         self.txt_id.set(f"ID: {self.data[0]}")
         self.txt_user.set(f"USER: {self.data[1]}")
-        self.txt_name.set(f"NAME: {self.data[2]}")
+        self.txt_name.set(f"NAME:")
+        self.txt_ent_name.set(self.data[2])
 
         self.controller.geometry("600x600")
 
