@@ -120,12 +120,13 @@ class fr_view(tk.Frame):
                                      
                                      """)  # Grab data needed from the database
 
-        self.data = self.data.fetchone()
 
-        self.txt_id.set(f"ID: {self.data[0]}")
-        self.txt_user.set(f"USER: {self.data[1]}")
-        self.txt_name.set(f"NAME:")
-        self.txt_ent_name.set(self.data[2])
+        self.unwrapped_data = self.data.fetchone()
+        
+        self.txt_id.set(f"ID: {self.unwrapped_data[0]}")
+        self.txt_user.set(f"USER: {self.unwrapped_data[1]}")
+        self.txt_name.set("NAME:")
+        self.txt_ent_name.set(self.unwrapped_data[2])
 
         self.controller.geometry("600x600")
 

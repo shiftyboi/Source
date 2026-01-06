@@ -13,6 +13,9 @@ class fr_index(tk.Frame):
         
         self.lb_hint = tk.Label(self, text="Double-click an item to view it in detail", font=("Arial", 15))
         self.lb_hint.grid(row=0,column=1,sticky="nsew")
+
+        self.btn_new = tk.Button(self, text="New item", font=("Arial", 15), command=lambda: self.new())
+        self.btn_new.grid(row=0,column=1, sticky="nw")
         
         self.tree_assets = ttk.Treeview(self, columns=('name','user','room'))
         
@@ -63,5 +66,37 @@ class fr_index(tk.Frame):
         curItem = self.tree_assets.focus()
         if curItem:
             item = self.tree_assets.item(curItem)
-            self.controller.item = item["text"] # Gets item ID currently clicked and switches to view frame
+            self.controller.item = item["text"]
+            # Gets item ID currently clicked and switches to view frame
             self.controller.show_frame("view")
+
+    def new(self):
+        self.cur = self.controller.cur
+        userid = self.cur.execute(f"""
+                         
+                         SELECT id FROM Users WHERE username="{self.controller.user}"
+                         
+                         """).fetchone()[0] # Get userid based off logged-in user
+        
+        
+        
+        self.cur.execute(f'''
+
+                        INSERT INTO Assets (name, user, location, "serial number") VALUES ("New Asset",{userid},0,"None")
+
+                        ''') # Create item in database
+        self.controller.conn.commit()
+
+        self.data = self.cur.execute('''
+
+                        SELECT id
+                        FROM Assets
+                        ORDER BY id DESC
+                        LIMIT 1
+
+
+''')
+        self.newid = self.data.fetchone()[0]
+        self.controller.item = self.newid
+        self.controller.show_frame("view")
+        
