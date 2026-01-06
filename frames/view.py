@@ -49,6 +49,9 @@ class fr_view(tk.Frame):
         self.ent_name = tk.Entry(self, textvariable=self.txt_ent_name, font=("Arial", 15))
         self.ent_name.grid(row=2, column=0, sticky="e")
 
+        self.btn_back = tk.Button(self, text="← Back", command=lambda: self.controller.show_frame("index"))
+        self.btn_back.grid(row=0, column=2, sticky="")
+
     def lend(self):
         print("Lend triggered")
         userid = self.cur.execute(f"""
