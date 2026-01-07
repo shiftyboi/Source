@@ -110,6 +110,8 @@ class fr_view(tk.Frame):
             self.controller.cur
         )  # Borrowing variables from app class for ease of use
 
+        
+        print(self.item)
         self.data = self.cur.execute(f"""
                                      
                                      SELECT Assets.id, Users.username, Assets.name, Rooms.name
