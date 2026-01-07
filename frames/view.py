@@ -84,6 +84,7 @@ class fr_view(tk.Frame):
         """)
 
         self.controller.conn.commit()
+        self.controller.show_frame("index")
     
     def save(self):
         self.item = self.controller.item
