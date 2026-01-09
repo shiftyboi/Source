@@ -62,7 +62,7 @@ class fr_index(tk.Frame):
             
         self.tree_assets.bind('<Double-Button-1>', self.select_item)
         
-    def select_item(self, event):
+    def select_item(self, _):
         curItem = self.tree_assets.focus()
         if curItem:
             item = self.tree_assets.item(curItem)
