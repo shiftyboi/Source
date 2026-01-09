@@ -31,7 +31,7 @@ class fr_view(tk.Frame):
         self.lb_name = tk.Label(
             self, text="NAME: null", font=("Arial", 15), textvariable=self.txt_name
         )
-        self.lb_name.grid(row=2, column=0, sticky="nw",columnspan=2)
+        self.lb_name.grid(row=2, column=0, sticky="w",columnspan=2)
 
         self.btn_lend = tk.Button(
             self, text="Lend Item", font=("Arial", 15), command=lambda: self.lend()
@@ -137,3 +137,4 @@ class fr_view(tk.Frame):
 
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
+        self.rowconfigure(2, weight=1)
