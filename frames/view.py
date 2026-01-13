@@ -17,6 +17,7 @@ class fr_view(tk.Frame):
         self.txt_user = tk.StringVar()
         self.txt_name = tk.StringVar()
         self.txt_ent_name = tk.StringVar()
+        self.txt_ent_serial = tk.StringVar()
 
         self.lb_id = tk.Label(
             self, text="ID: null", font=("Arial", 15), textvariable=self.txt_id
@@ -33,6 +34,9 @@ class fr_view(tk.Frame):
         )
         self.lb_name.grid(row=2, column=0, sticky="w",columnspan=2)
 
+        self.lb_serial = tk.Label(self, text="SERIAL:", font=("Arial", 15))
+        self.lb_serial.grid(row=3,column=0,sticky="w")
+
         self.btn_lend = tk.Button(
             self, text="Lend Item", font=("Arial", 15), command=lambda: self.lend()
         )
@@ -43,7 +47,7 @@ class fr_view(tk.Frame):
         )
         self.btn_delete.grid(row=0, column=1, sticky="nw")
 
-        self.btn_save = tk.Button(self, text="Save name", font=("Arial", 15), command=lambda: self.save())
+        self.btn_save = tk.Button(self, text="Save changes", font=("Arial", 15), command=lambda: self.save())
         self.btn_save.grid(row=2, column=1, sticky="")
         
         self.ent_name = tk.Entry(self, textvariable=self.txt_ent_name, font=("Arial", 15))
@@ -51,6 +55,9 @@ class fr_view(tk.Frame):
 
         self.btn_back = tk.Button(self, text="← Back", command=lambda: self.controller.show_frame("index"))
         self.btn_back.grid(row=0, column=2, sticky="")
+
+        self.ent_serial = tk.Entry(self, textvariable=self.txt_ent_serial, font=("Arial", 15))
+        self.ent_serial.grid(row=3, column=0, sticky="e")
 
     def lend(self):
         print("Lend triggered")
@@ -91,12 +98,14 @@ class fr_view(tk.Frame):
         self.cur = self.controller.cur
 
         name = self.txt_ent_name.get()    
+        serial = self.txt_ent_serial.get()
         
         
         self.cur.execute(f'''
 
                         UPDATE Assets
-                        SET name = "{name}"
+                        SET name = "{name}",
+                        "serial number" = "{serial}"
                         WHERE id = {self.item}
                         
 ''')
@@ -114,7 +123,7 @@ class fr_view(tk.Frame):
         
         self.data = self.cur.execute(f"""
                                      
-                                     SELECT Assets.id, Users.username, Assets.name, Rooms.name
+                                     SELECT Assets.id, Users.username, Assets.name, Rooms.name, Assets."serial number"
                                      FROM Assets
                                      JOIN Users on Assets.user=Users.id
                                      JOIN Rooms on Assets.location=Rooms.id
@@ -129,6 +138,7 @@ class fr_view(tk.Frame):
         self.txt_user.set(f"USER: {self.unwrapped_data[1]}")
         self.txt_name.set("NAME:")
         self.txt_ent_name.set(self.unwrapped_data[2])
+        self.txt_ent_serial.set(self.unwrapped_data[4])
 
         self.controller.geometry("600x600")
 
