@@ -32,6 +32,8 @@ class App(tk.Tk):
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
 
+        self.title("Source")
+
         self.container.columnconfigure(0, weight=1)
         self.container.rowconfigure(0, weight=1)
 
