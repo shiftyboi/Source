@@ -3,6 +3,7 @@ from frames.login import fr_login
 from frames.menu import fr_menu
 from frames.index import fr_index
 from frames.view import fr_view
+from frames.user import fr_user
 
 
 class App(tk.Tk):
@@ -27,7 +28,7 @@ class App(tk.Tk):
 
         self.frames = {}
 
-        self.classes = [fr_login, fr_menu, fr_index, fr_view]  # List of frame classes
+        self.classes = [fr_login, fr_menu, fr_index, fr_view, fr_user]  # List of frame classes
 
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)

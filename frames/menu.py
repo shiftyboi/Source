@@ -15,7 +15,7 @@ class fr_menu(tk.Frame):
         self.btn_index = tk.Button(self, text="Index", command=lambda: self.controller.show_frame("index"), font=("Arial", 15))
         self.btn_index.grid(row=0,column=1,pady=2, padx=5, sticky="e", ipadx=5)
         
-        self.btn_user = tk.Button(self, text="Alerts",font=("Arial", 15))
+        self.btn_user = tk.Button(self, text="Alerts",font=("Arial", 15), command=lambda: self.controller.show_frame("user"))
         self.btn_user.grid(row=1, column=1, pady=2, padx=5, sticky="e", ipadx=5)
     
     
