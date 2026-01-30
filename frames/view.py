@@ -65,12 +65,29 @@ class fr_view(tk.Frame):
                          
                          SELECT id FROM Users WHERE username="{self.controller.user}"
                          
-                         """)
+                         """) 
 
+        
+        userid = userid.fetchall()
+        
+        currentid = self.cur.execute(f'''
+
+                        SELECT id FROM Users WHERE username="{self.txt_user.get()}"
+
+                            ''') # Get current user's id
+        
+        self.cur.execute(f"""
+
+                        INSERT INTO Alerts (device, recipient, lender)
+                        VALUES ("{self.item}", "{currentid.fetchone()[0]}", "{userid[0][0]}")
+
+                    """)
+
+        
         self.cur.execute(f"""
                          
                          UPDATE Assets
-                         SET user={userid.fetchone()[0]}
+                         SET user={userid[0][0]}
                          WHERE id={self.item}
                          
                          """)
