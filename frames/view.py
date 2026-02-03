@@ -13,6 +13,8 @@ class fr_view(tk.Frame):
         self.cur: sqlite3.Cursor  # Set later in refresh function
         self.data = None
 
+        # --- TKINTER ITEM DECLARATIONS ---
+
         self.txt_id = tk.StringVar()
         self.txt_user = tk.StringVar()
         self.txt_name = tk.StringVar()
@@ -81,7 +83,7 @@ class fr_view(tk.Frame):
                         INSERT INTO Alerts (device, recipient, lender)
                         VALUES ("{self.item}", "{currentid.fetchone()[0]}", "{userid[0][0]}")
 
-                    """)
+                    """) # Create alert
 
         
         self.cur.execute(f"""
@@ -90,7 +92,7 @@ class fr_view(tk.Frame):
                          SET user={userid[0][0]}
                          WHERE id={self.item}
                          
-                         """)
+                         """) # Update assets to feature new user
 
         self.controller.conn.commit()
 
