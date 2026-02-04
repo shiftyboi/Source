@@ -74,14 +74,14 @@ class fr_view(tk.Frame):
         
         currentid = self.cur.execute(f'''
 
-                        SELECT id FROM Users WHERE username="{self.txt_user.get()}"
+                        SELECT id FROM Users WHERE username="{self.currentuser}"
 
                             ''') # Get current user's id
         
         self.cur.execute(f"""
 
                         INSERT INTO Alerts (device, recipient, lender)
-                        VALUES ("{self.item}", "{currentid.fetchone()[0]}", "{userid[0][0]}")
+                        VALUES ("{self.item}", {currentid.fetchone()[0]}, {userid[0][0]})
 
                     """) # Create alert
 
@@ -154,6 +154,7 @@ class fr_view(tk.Frame):
         self.unwrapped_data = self.data.fetchone()
         
         self.txt_id.set(f"ID: {self.unwrapped_data[0]}")
+        self.currentuser = self.unwrapped_data[1]
         self.txt_user.set(f"USER: {self.unwrapped_data[1]}")
         self.txt_name.set("NAME:")
         self.txt_ent_name.set(self.unwrapped_data[2])
