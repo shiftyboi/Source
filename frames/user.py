@@ -22,7 +22,25 @@ class fr_user(tk.Frame):
         self.btn_back = tk.Button(self, text="← Back", command=lambda: self.controller.show_frame("menu"), font=("Arial", 15))
         self.btn_back.grid(row=1, column=0)
     
+    def next(self):
+
+        self.currentalert = next(self.alerts, None)
+        print(self.currentalert)
     
+        if self.currentalert:
+        
+            device = self.cur.execute(f'''
+                    SELECT name FROM Assets WHERE id = {self.currentalert[1]}
+    ''').fetchone()
+            
+            lender = self.cur.execute(f'''
+                    SELECT username FROM Users WHERE id = {self.currentalert[3]}
+    ''').fetchone()
+            
+            self.txt_alert.set(f"{lender[0]} is now lending {device[0]}.")
+        
+        else:
+            self.txt_alert.set("No alerts.")
     
     
     def refresh(self):
@@ -45,16 +63,20 @@ class fr_user(tk.Frame):
 
 ''')
         
-        currentalert = self.alerts.fetchone()
+        self.alerts = iter(self.alerts.fetchall())
 
-        if currentalert:
+        print(self.alerts)
+        
+        self.currentalert = next(self.alerts)
+
+        if self.currentalert:
         
             device = self.cur.execute(f'''
-                    SELECT name FROM Assets WHERE id = {currentalert[1]}
+                    SELECT name FROM Assets WHERE id = {self.currentalert[1]}
     ''').fetchone()
             
             lender = self.cur.execute(f'''
-                    SELECT username FROM Users WHERE id = {currentalert[3]}
+                    SELECT username FROM Users WHERE id = {self.currentalert[3]}
     ''').fetchone()
 
             
