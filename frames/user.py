@@ -25,17 +25,14 @@ class fr_user(tk.Frame):
     def next(self):
 
         self.currentalert = next(self.alerts, None)
-        print(self.currentalert)
     
         if self.currentalert:
         
             device = self.cur.execute(f'''
-                    SELECT name FROM Assets WHERE id = {self.currentalert[1]}
-    ''').fetchone()
+                    SELECT name FROM Assets WHERE id = {self.currentalert[1]}''').fetchone()
             
             lender = self.cur.execute(f'''
-                    SELECT username FROM Users WHERE id = {self.currentalert[3]}
-    ''').fetchone()
+                    SELECT username FROM Users WHERE id = {self.currentalert[3]}''').fetchone()
             
             self.txt_alert.set(f"{lender[0]} is now lending {device[0]}.")
         
@@ -58,26 +55,19 @@ class fr_user(tk.Frame):
         self.alerts = self.cur.execute(f'''
 
                         SELECT * FROM Alerts 
-                        WHERE recipient = (SELECT id FROM Users WHERE username="{self.controller.user}")
-
-
-''')
+                        WHERE recipient = (SELECT id FROM Users WHERE username="{self.controller.user}")''')
         
         self.alerts = iter(self.alerts.fetchall())
-
-        print(self.alerts)
         
         self.currentalert = next(self.alerts)
 
         if self.currentalert:
         
             device = self.cur.execute(f'''
-                    SELECT name FROM Assets WHERE id = {self.currentalert[1]}
-    ''').fetchone()
+                    SELECT name FROM Assets WHERE id = {self.currentalert[1]}''').fetchone()
             
             lender = self.cur.execute(f'''
-                    SELECT username FROM Users WHERE id = {self.currentalert[3]}
-    ''').fetchone()
+                    SELECT username FROM Users WHERE id = {self.currentalert[3]}''').fetchone()
 
             
             
