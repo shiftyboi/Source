@@ -62,7 +62,6 @@ class fr_view(tk.Frame):
         self.ent_serial.grid(row=3, column=0, sticky="e")
 
     def lend(self):
-        print("Lend triggered")
         userid = self.cur.execute(f"""
                          
                          SELECT id FROM Users WHERE username="{self.controller.user}"
@@ -89,14 +88,12 @@ class fr_view(tk.Frame):
         self.cur.execute(f"""
                          
                          UPDATE Assets
-                         SET user={userid[0][0]}
+                         SET user={userid[0][0]}, date_borrowed=datetime('now')
                          WHERE id={self.item}
                          
                          """) # Update assets to feature new user
 
         self.controller.conn.commit()
-
-        print("User changed")
 
     def delete(self):
         self.item = self.controller.item

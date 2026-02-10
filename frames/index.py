@@ -82,7 +82,7 @@ class fr_index(tk.Frame):
         
         self.cur.execute(f'''
 
-                        INSERT INTO Assets (name, user, location, "serial number") VALUES ("New Asset",{userid},1,"None")
+                        INSERT INTO Assets (name, user, location, "serial number", date_installed) VALUES ("New Asset",{userid},1,"None", datetime('now'))
 
                         ''') # Create item in database
         self.controller.conn.commit()
