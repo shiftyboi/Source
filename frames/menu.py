@@ -50,6 +50,6 @@ class fr_menu(tk.Frame):
                                     JOIN Users ON Assets.user=Users.id
 
                                     ''')
-            table = tabulate.tabulate(data, headers=["Item ID", "Item name", "Date Installed", "Item Serial Number", "Current user", "Date lent"])
+            table = tabulate.tabulate(data, tablefmt="double_grid", headers=["Item ID", "Item name", "Date Installed", "Item Serial Number", "Current user", "Date lent"])
             f.writelines(f"Report generated on {datetime.datetime.now()} by {self.controller.user} \n \n")
             f.writelines(table)
